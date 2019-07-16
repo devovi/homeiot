@@ -1,0 +1,100 @@
+  
+<!-- <form [formGroup] = "form"> -->
+        <div class="mainContainer">
+            <div>
+              <span>Temp Sensor : </span>
+              <input class ="rangeslider" type="range" min = "1" max = "50" value ="50" name = "tempValue" (input) = "tempRangevalue($event)" value = {{tempValue}}>{{tempValue}}
+            </div>
+            <div>
+              <span>Pressure Sensor  : </span>
+              <input class = "pressure-rangebar " type ="range" min = "1" max = "50" name = "pressureValue" (input) = "pressureRangevalue($event)" value = {{pressureValue}}>{{pressureValue}}
+            </div>
+            <div>
+                <span>Optical : </span>
+                <div class="btn-group btn-toggle" data-toggle="buttons">
+                    <label class="btn btn-primary active" for="opticalvalue1">
+                      <input type="radio" id = "opticalvalue1" name="opticalvalue" (input) = "opticalValue($event)" value = "ON" /> ON 
+                    </label>
+                    <label class="btn btn-default" for="opticalvalue2">
+                      <input type="radio" id = "opticalvalue2" name="opticalvalue" (input) = "opticalValue($event)" value = "OFF" /> OFF 
+                    </label>
+                </div>
+            </div>
+            <div>
+                <span>Proximity : </span>
+                <label class="switch" >
+                    <input type="checkbox" name = "proximityvalue" (input) = "proximityValue($event)" value = {{proximityvalue}}> 
+                    <span class="slider round"></span>
+                </label>     
+            </div>
+            <div>
+              <span>Led : </span>
+              <div class="btn-group btn-toggle" data-toggle="buttons">
+                  <label class="btn btn-primary active">
+                    <input type="radio"> ON
+                  </label>
+                  <label class="btn btn-default">
+                    <input type="radio"> OFF
+                  </label>
+              </div>
+            </div>
+            <div>
+              <span>A/C :  </span>
+              <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+              </label>     
+            </div>
+        </div>
+     
+
+
+   <h1>LiveData</h1>
+  
+   <div class="dropdown-wrapper">
+     <select>
+       <option>building-1</option>
+       <option>building-2</option>
+       <option>building-3</option>
+       <option>building-4</option>
+       <option>building-5</option>
+       <option>building-6</option>
+     </select>
+   </div>
+   <div class="dropdown-wrapper">
+     <select>
+      <option>Floor-1</option>
+      <option>Floor-2</option>
+      <option>Floor-3</option>
+      <option>Floor-4</option>
+      <option>Floor-5</option>
+      <option>Floor-6</option>
+    </select>
+  </div>
+  <div class="dropdown-wrapper">
+    <select>
+      <option>House-1</option>
+      <option>House-2</option>
+      <option>House-3</option>
+      <option>House-4</option>
+      <option>House-5</option>
+      <option>House-6</option>
+    </select>
+ 
+  </div>
+  <!-- <div style="display: block">
+    <canvas mdbChart
+        [chartType]="chartType"
+        [datasets]="chartDatasets"
+        [labels]="chartLabels"
+        [colors]="chartColors"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+    </canvas>
+  </div> -->
+
+
+
+<!-- </form> -->
