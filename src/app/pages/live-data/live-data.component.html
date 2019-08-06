@@ -1,4 +1,22 @@
-
+<html>
+  <head>
+      <head>
+          <title>Bar Chart Pan</title>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+          <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+          <script src="../dist/chartjs-plugin-zoom.min.js"></script>
+        
+          <style>
+          canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+          }
+          </style>
+        </head>
+        
+  </head>
+  <body>
 <h1>LiveData</h1>
   
    <div class="dropdown-wrapper">
@@ -35,17 +53,17 @@
   <!-- <div *ngFor = "let list of liveDataList"> -->
   <div class="chart-maincontainer">
     <h1>Hall</h1>
+    <button (click) = "reset()" >Reset zoom</button>
         <table>
            <tr>
             <td class= "chart-wrapper"><canvas class= "chart" id= "lineChart" ></canvas></td>
+            
             <td class= "chart-wrapper"><canvas id= "barChart"></canvas></td>
             <td class= "chart-wrapper"><canvas id= "barChart1"></canvas></td>
             <td class= "chart-wrapper"><canvas id= "lineChart1"></canvas></td>
-           </tr>
-           <tr> 
-            
            </tr> 
-        </table> 
+        </table>
+         
   </div>
   <div class="chart-maincontainer">
       <h1>kitchen</h1>
@@ -78,3 +96,5 @@
             </table> 
       </div>
     <!-- </div>   -->
+  </body>
+    </html>

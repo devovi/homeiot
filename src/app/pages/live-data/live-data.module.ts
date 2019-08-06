@@ -6,6 +6,8 @@ import{routing} from './live-data.routing';
 // import { LivedataService } from '../../shared/services/livedata.service';
 import { HttpClient } from '@angular/common/http';
 import { LivedataService } from '../../shared/services/livedata.service';
+import 'chartjs-plugin-zoom';
+import * as moment from 'moment';
 
 @NgModule({
   imports: [

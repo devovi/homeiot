@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart} from 'chart.js';
 import { LivedataService } from '../../shared/services/livedata.service';
+// import 'chartjs-plugin-zoom';
 // import { LivedataService } from '../../shared/services/livedata.service';
-LivedataService
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-live-data',
   templateUrl: './live-data.component.html',
@@ -11,13 +13,15 @@ LivedataService
 export class LiveDataComponent implements OnInit {
  LineChart;
  BarChart;
- public floorvalue ="";
- public buildingvalue="";
- public housevalue ="";
- tempreatureDataList =[];
- ledDataList =[];
- opticalDataList = [];
- proximityDataList =[];
+ public floorvalue =" ";
+ public buildingvalue=" ";
+ public housevalue =" ";
+ tempreatureDataList = [ ];
+ ledDataList = [ ];
+ opticalDataList = [ ];
+ proximityDataList =[ ];
+ xaxisLabels = [];
+ yaxisLabels = [];
   constructor( public liveDataService:LivedataService) { }
   floorValue(e){
     this.floorvalue =e.target.value;
@@ -31,31 +35,36 @@ export class LiveDataComponent implements OnInit {
     getAllSensorData(){
        this.liveDataService.getData().subscribe(res =>{
          const liveDataList = res.data;
-         for(let i=0;i<liveDataList.length;i++) {
-          const item = liveDataList[i]
-          console.log(item)
-           for(let z=i;z<item.sensordata.length;z++) {
-            const dataItem = item.sensordata[z]
-            this.tempreatureDataList.push(dataItem.temperature)
-            this.ledDataList.push(dataItem.led)
-            this.opticalDataList.push(dataItem.optical)
-            this.proximityDataList.push(dataItem.proximity)
-           }
+         liveDataList.forEach((item) => {
+          const time = moment(item.createdAt).format(`LTS`)
+          for(let i=0;i<item.sensordata.length;i++) {
+            const itemData = item.sensordata[i];
+            this.tempreatureDataList.push(itemData.temperature)
+            this.ledDataList.push(itemData.led)
+            this.opticalDataList.push(itemData.optical)
+            this.proximityDataList.push(itemData.proximity)
           }
+
+         })
          this.renderCharts();
        });
     }
+    reset(){
+    
+    }
+    
   ngOnInit() {
     this.getAllSensorData();
     this.renderCharts();
   }
-
+  
+    
   renderCharts() {
     this.LineChart = new Chart(`lineChart` , {
       type: `line`,
       
       data: {
-        labels: ['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11' , '12'],
+        labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
         datasets:[{
           label: "Temperature (°C)",
            data: this.tempreatureDataList,
@@ -64,28 +73,59 @@ export class LiveDataComponent implements OnInit {
           lineTension:0.2,
           borderColor: 'red',
           borderWidth:1
+          
         }]
       },
+      
       options:{
+        
          title:{
             // text: "Line Chart",
             display: true
          },
          scales:{
+        //   xAxes: [{
+        //     type: 'time',
+        //     time: {
+        //         displayFormats: {
+        //             quarter: 'MMM YYYY'
+        //         }
+        //     }
+        // }],
            yAxes: [{
                ticks:{
+                 min: 20 , max: 50
                  
-                 beginAtZero:true
+                //  beginAtZero:true
                }
            }]
-         }
-      } 
+         },
+         plugins: {
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'xy',
+              speed: 10,
+              threshold: 10
+            },
+            zoom: {
+              enabled: true,
+              mode: 'y',
+              speed: 10,
+              threshold: 10
+            }
+          }
+        }
+
+      },
+      
       });
       this.LineChart = new Chart(`lineChart1` , {
         type: `line`,
         
         data: {
-          labels:['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11' , '12'],
+          labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
           datasets:[{
             label: "Optical",
             data: this.opticalDataList,
@@ -101,27 +141,50 @@ export class LiveDataComponent implements OnInit {
               display: true
            },
            scales:{
+          //   xAxes: [{
+          //     type: 'time',
+          //     time: {
+          //         displayFormats: {
+          //             quarter: 'MMM YYYY'
+          //         }
+          //     }
+          // }],
              yAxes: [{
                  ticks:{
                    
                    beginAtZero:true
                  }
              }]
-           }
+           },
+           plugins: {
+            zoom: {
+              pan: {
+                enabled: true,
+                mode: 'x',
+                speed: 10,
+                threshold: 10
+              },
+              zoom: {
+                enabled: true,
+                mode: 'y'
+              }
+            }
+          }
         } 
         });
   
       this.BarChart = new Chart ( 'barChart', {
         type: 'bar' , 
         data:{
-          labels: ["1" , "2" ,"3","4","5","6","7","8","9","10"],
+          labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
           datasets:[{
             label:"led",
             data : this.ledDataList,
             backgroundColor:[
               "rgba(255,99,132,0.2)",
               "rgba(54 ,162 , 235,0.2)",
-  
+              
               "rgba(255,99,132,0.2)",
               "rgba(54 ,162 , 235,0.2)"
             ],
@@ -139,12 +202,34 @@ export class LiveDataComponent implements OnInit {
                display: true
             },
             scales:{
+            //   xAxes: [{
+            //     type: 'time',
+            //     time: {
+            //         displayFormats: {
+            //             quarter: 'MMM YYYY'
+            //         }
+            //     }
+            // }],
               yAxes: [{
                   ticks:{
                     
                     beginAtZero:true
                   }
               }]
+            },
+            plugins: {
+              zoom: {
+                pan: {
+                  enabled: true,
+                  mode: 'x',
+                  speed: 10,
+                  threshold: 10
+                },
+                zoom: {
+                  enabled: true,
+                  mode: 'y'
+                }
+              }
             }
          } 
         
@@ -153,22 +238,23 @@ export class LiveDataComponent implements OnInit {
       this.BarChart = new Chart ( 'barChart1', {
         type: 'bar' , 
         data:{
-          labels: ["1" , "2" ,"3","4","5","6","7","8","9","10"],
+          labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
           datasets:[{
             label:"proximity",
             data : this.proximityDataList,
             backgroundColor:[
               "rgba(255,99,132,0.2)",
               "rgba(54 ,162 , 235,0.2)",
-  
               "rgba(255,99,132,0.2)",
               "rgba(54 ,162 , 235,0.2)"
             ],
             borderColor:[
               "rgba(255,99,132,0.2)",
-              "rgba(255,99,132,0.2)",,
               "rgba(255,99,132,0.2)",
               "rgba(255,99,132,0.2)",
+              "rgba(255,99,132,0.2)",
+    
             ],
           }]
           },
@@ -178,12 +264,34 @@ export class LiveDataComponent implements OnInit {
                display: true
             },
             scales:{
+            //   xAxes: [{
+            //     type: 'time',
+            //     time: {
+            //         displayFormats: {
+            //             quarter: 'MMM YYYY'
+            //         }
+            //     }
+            // }],
               yAxes: [{
                   ticks:{
                     
                     beginAtZero:true
                   }
               }]
+            },
+            plugins: {
+              zoom: {
+                pan: {
+                  enabled: true,
+                  mode: 'x',
+                  speed: 10,
+                  threshold: 10
+                },
+                zoom: {
+                  enabled: true,
+                  mode: 'y'
+                }
+              }
             }
          } 
         
@@ -192,7 +300,8 @@ export class LiveDataComponent implements OnInit {
       this.BarChart = new Chart ( 'kitchen-barChart', {
         type: 'bar' , 
         data:{
-          labels: ["1" , "2" ,"3","4","5","6","7","8","9","10"],
+          labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
           datasets:[{
             label:"led",
             data : this.proximityDataList,
@@ -217,12 +326,34 @@ export class LiveDataComponent implements OnInit {
                display: true
             },
             scales:{
+            //   xAxes: [{
+            //     type: 'time',
+            //     time: {
+            //         displayFormats: {
+            //             quarter: 'MMM YYYY'
+            //         }
+            //     }
+            // }],
               yAxes: [{
                   ticks:{
                     
                     beginAtZero:true
                   }
               }]
+            },
+            plugins: {
+              zoom: {
+                pan: {
+                  enabled: true,
+                  mode: 'x',
+                  speed: 10,
+                  threshold: 10
+                },
+                zoom: {
+                  enabled: true,
+                  mode: 'y'
+                }
+              }
             }
          } 
         
@@ -232,7 +363,8 @@ export class LiveDataComponent implements OnInit {
         type: `line`,
         
         data: {
-          labels:['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11' , '12'],
+          labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
           datasets:[{
             label: "Temperature (°C)",
             data: this.tempreatureDataList,
@@ -250,17 +382,41 @@ export class LiveDataComponent implements OnInit {
            scales:{
              yAxes: [{
                  ticks:{
-                   
+                  
                    beginAtZero:true
                  }
-             }]
-           }
+             }],
+          //    xAxes: [{
+          //     type: 'time',
+          //     time: {
+          //         displayFormats: {
+          //             quarter: 'MMM YYYY'
+          //         }
+          //     }
+          // }]
+
+           },
+           plugins: {
+            zoom: {
+              pan: {
+                enabled: true,
+                mode: 'x',
+                speed: 10,
+                threshold: 10
+              },
+              zoom: {
+                enabled: true,
+                mode: 'y'
+              }
+            }
+          }
         } 
         });
         this.BarChart = new Chart ( 'kitchen-barChart1', {
           type: 'bar' , 
           data:{
-            labels: ["1" , "2" ,"3","4","5","6","7","8","9","10"],
+            labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
             datasets:[{
               label:"proximity",
               data : this.ledDataList,
@@ -285,12 +441,34 @@ export class LiveDataComponent implements OnInit {
                  display: true
               },
               scales:{
+              //   xAxes: [{
+              //     type: 'time',
+              //     time: {
+              //         displayFormats: {
+              //             quarter: 'MMM YYYY'
+              //         }
+              //     }
+              // }],
                 yAxes: [{
                     ticks:{
                       
                       beginAtZero:true
                     }
                 }]
+              },
+              plugins: {
+                zoom: {
+                  pan: {
+                    enabled: true,
+                    mode: 'x',
+                    speed: 10,
+                    threshold: 10
+                  },
+                  zoom: {
+                    enabled: true,
+                    mode: 'y'
+                  }
+                }
               }
            } 
           
@@ -300,7 +478,8 @@ export class LiveDataComponent implements OnInit {
           type: `line`,
           
           data: {
-            labels:['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11' , '12'],
+            labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
             datasets:[{
               label: "Optical",
               data:this.opticalDataList,
@@ -316,19 +495,42 @@ export class LiveDataComponent implements OnInit {
                 display: true
              },
              scales:{
+            //   xAxes: [{
+            //     type: 'time',
+            //     time: {
+            //         displayFormats: {
+            //             quarter: 'MMM YYYY'
+            //         }
+            //     }
+            // }],
                yAxes: [{
                    ticks:{
                      
                      beginAtZero:true
                    }
                }]
-             }
+             },
+             plugins: {
+              zoom: {
+                pan: {
+                  enabled: true,
+                  mode: 'x',
+                  speed: 10,
+                  threshold: 10
+                },
+                zoom: {
+                  enabled: true,
+                  mode: 'y'
+                }
+              }
+            }
           } 
           });
           this.BarChart = new Chart ( 'room-barChart', {
             type: 'bar' , 
             data:{
-              labels: ["1" , "2" ,"3","4","5","6","7","8","9","10"],
+              labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
               datasets:[{
                 label:"led",
                 data : this.ledDataList,
@@ -353,12 +555,34 @@ export class LiveDataComponent implements OnInit {
                    display: true
                 },
                 scales:{
+                //   xAxes: [{
+                //     type: 'time',
+                //     time: {
+                //         displayFormats: {
+                //             quarter: 'MMM YYYY'
+                //         }
+                //     }
+                // }],
                   yAxes: [{
                       ticks:{
                         
                         beginAtZero:true
                       }
                   }]
+                },
+                plugins: {
+                  zoom: {
+                    pan: {
+                      enabled: true,
+                      mode: 'x',
+                      speed: 10,
+                      threshold: 10
+                    },
+                    zoom: {
+                      enabled: true,
+                      mode: 'y'
+                    }
+                  }
                 }
              } 
             
@@ -368,7 +592,8 @@ export class LiveDataComponent implements OnInit {
             type: `line`,
             
             data: {
-              labels:['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11' , '12'],
+              labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
               datasets:[{
                 label: "Temperature (°C)",
                 data: this.tempreatureDataList,
@@ -384,19 +609,42 @@ export class LiveDataComponent implements OnInit {
                   display: true
                },
                scales:{
+              //   xAxes: [{
+              //     type: 'time',
+              //     time: {
+              //         displayFormats: {
+              //             quarter: 'MMM YYYY'
+              //         }
+              //     }
+              // }],
                  yAxes: [{
                      ticks:{
                        
                        beginAtZero:true
                      }
                  }]
-               }
+               },
+               plugins: {
+                zoom: {
+                  pan: {
+                    enabled: true,
+                    mode: 'x',
+                    speed: 10,
+                    threshold: 10
+                  },
+                  zoom: {
+                    enabled: true,
+                    mode: 'y'
+                  }
+                }
+              }
             } 
             });
             this.BarChart = new Chart ( 'room-barChart1', {
               type: 'bar' , 
               data:{
-                labels: ["1" , "2" ,"3","4","5","6","7","8","9","10"],
+                labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
                 datasets:[{
                   label:"proximity",
                   data : this.proximityDataList,
@@ -421,12 +669,34 @@ export class LiveDataComponent implements OnInit {
                      display: true
                   },
                   scales:{
+                  //   xAxes: [{
+                  //     type: 'time',
+                  //     time: {
+                  //         displayFormats: {
+                  //             quarter: 'MMM YYYY'
+                  //         }
+                  //     }
+                  // }],
                     yAxes: [{
                         ticks:{
                           
                           beginAtZero:true
                         }
                     }]
+                  },
+                  plugins: {
+                    zoom: {
+                      pan: {
+                        enabled: true,
+                        mode: 'x',
+                        speed: 10,
+                        threshold: 10
+                      },
+                      zoom: {
+                        enabled: true,
+                        mode: 'y'
+                      }
+                    }
                   }
                } 
               
@@ -436,7 +706,8 @@ export class LiveDataComponent implements OnInit {
               type: `line`,
               
               data: {
-                labels:['1' , '2', '3', '4', '5', '6', '7', '8', '9', '10', '11' , '12'],
+                labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
+
                 datasets:[{
                   label: "optical",
                   data: this.opticalDataList,
@@ -452,13 +723,35 @@ export class LiveDataComponent implements OnInit {
                     display: true
                  },
                  scales:{
+                //   xAxes: [{
+                //     type: 'time',
+                //     time: {
+                //         displayFormats: {
+                //             quarter: 'MMM YYYY'
+                //         }
+                //     }
+                // }],
                    yAxes: [{
                        ticks:{
                          
                          beginAtZero:true
                        }
                    }]
-                 }
+                 },
+                 plugins: {
+                  zoom: {
+                    pan: {
+                      enabled: true,
+                      mode: 'x',
+                      speed: 10,
+                      threshold: 10
+                    },
+                    zoom: {
+                      enabled: true,
+                      mode: 'y'
+                    }
+                  }
+                }
               } 
               });
   }
