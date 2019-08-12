@@ -4,7 +4,7 @@ import { LivedataService } from '../../shared/services/livedata.service';
 // import 'chartjs-plugin-zoom';
 // import { LivedataService } from '../../shared/services/livedata.service';
 import * as moment from 'moment';
-import { EmbedVideoService } from 'ngx-embed-video';
+// import { EmbedVideoService } from 'ngx-embed-video';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class LiveDataComponent implements OnInit {
 //  public youtubeUrl = 'https://www.youtube.com/watch?v=iHhcHTlGtRs';
 //  public youtubeId = 'iHhcHTlGtRs';
 
-  constructor( public liveDataService:LivedataService, private embedService: EmbedVideoService) { 
+  constructor( public liveDataService:LivedataService, ) { 
     // console.log(this.embedService.embed(this.youtubeUrl));
     // console.log(this.embedService.embed_youtube(this.youtubeId));
     // // this.iframe_html = this.embedService.embed(this.youtubeUrl);
