@@ -30,10 +30,10 @@ export class LiveDataComponent implements OnInit {
 //  public youtubeUrl = 'https://www.youtube.com/watch?v=iHhcHTlGtRs';
 //  public youtubeId = 'iHhcHTlGtRs';
 
-  constructor( public liveDataService:LivedataService, ) { 
+  constructor( public liveDataService:LivedataService) { 
     // console.log(this.embedService.embed(this.youtubeUrl));
     // console.log(this.embedService.embed_youtube(this.youtubeId));
-    // // this.iframe_html = this.embedService.embed(this.youtubeUrl);
+    // this.iframe_html = this.embedService.embed(this.youtubeUrl);
 
    }
   floorValue(e){

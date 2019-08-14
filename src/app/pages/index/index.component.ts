@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartsService } from '../charts/components/echarts/charts.service';
+import { EmbedVideoService } from 'ngx-embed-video';
 
 @Component({
   selector: 'app-index',
@@ -11,9 +12,23 @@ export class IndexComponent implements OnInit {
   showloading: boolean = false;
 
   public AnimationBarOption;
+  public iframe_html: any;
+  iframe_html1:any;
+  iframe_html2:any;
+  public youtubeUrlEnglish = 'https://www.youtube.com/watch?v=uHHEMyFamNg';
+  public youtubeUrlTelugu = 'https://www.youtube.com/watch?v=snwXT6tfqUU';
+  public youtubeUrlTamil = 'https://www.youtube.com/watch?v=lXCGufq-JvY';
+  public youtubeId = 'iHhcHTlGtRs';
+ 
+  constructor(private _chartsService: ChartsService, private embedService: EmbedVideoService) {
+    console.log(this.embedService.embed(this.youtubeUrlEnglish ));
+    console.log(this.embedService.embed_youtube(this.youtubeId));
+    this.iframe_html = this.embedService.embed(this.youtubeUrlEnglish );
+    this.iframe_html1 = this.embedService.embed(this.youtubeUrlTelugu);
+    this.iframe_html2 = this.embedService.embed(this.youtubeUrlTamil);
 
-  constructor(private _chartsService: ChartsService) { }
-
+   }
+  
   ngOnInit() {
     this.AnimationBarOption = this._chartsService.getAnimationBarOption();
   }
