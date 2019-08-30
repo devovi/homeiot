@@ -7,13 +7,11 @@ import{routing} from './live-data.routing';
 import { HttpClient } from '@angular/common/http';
 import { LivedataService } from '../../shared/services/livedata.service';
 import 'chartjs-plugin-zoom';
-// import { EmbedVideo } from 'ngx-embed-video';
 import * as moment from 'moment';
 
 @NgModule({
   imports: [
     CommonModule,
-    // EmbedVideo.forRoot(),
     routing
   ],
   declarations: [LiveDataComponent],
