@@ -16,7 +16,19 @@ import { max } from 'rxjs/operators';
 })
 export class LiveDataComponent implements OnInit {
  LineChart;
+ LineChart2;
+ LineChart3;
  BarChart;
+ kitchenBarChart;
+ kitchenLineChart2;
+ kitchenLineChart3;
+ kitchenLineChart;
+ roomLineChart3;
+ roomLineChart2;
+ roomLineChart1;
+ roomBarChart;
+ 
+ 
  public floorvalue =" ";
  public buildingvalue=" ";
  public housevalue =" ";
@@ -90,7 +102,7 @@ export class LiveDataComponent implements OnInit {
     setInterval() {
       this.interval = setInterval(() => {
         this.getAllSensorData();
-      },1000 * 5 * 60)
+      },1000 * 5 *60)
     }
     reset(){
       clearInterval(this.interval)
@@ -102,7 +114,21 @@ export class LiveDataComponent implements OnInit {
     this.renderCharts();
   }
   
-    
+  resetZoom(){
+    console.log("reset zoom");
+    this.LineChart2.resetZoom();
+    this.BarChart.resetZoom();
+    this.LineChart3.resetZoom();
+    this.LineChart.resetZoom();
+    this.kitchenBarChart.resetZoom();
+    this.kitchenLineChart.resetZoom();
+    this.kitchenLineChart2.resetZoom();
+    this.kitchenLineChart3.resetZoom();
+    this.roomBarChart.resetZoom();
+    this.roomLineChart1.resetZoom();
+    this.roomLineChart2.resetZoom();
+    this.roomLineChart3.resetZoom();
+  }
   renderCharts() {
     this.LineChart = new Chart(`lineChart` , {
       type: `line`,
@@ -167,7 +193,7 @@ export class LiveDataComponent implements OnInit {
       },
       
       });
-      this.LineChart = new Chart(`lineChart2` , {
+      this.LineChart2 = new Chart(`lineChart2` , {
         type: `line`,
         
         data: {
@@ -231,7 +257,7 @@ export class LiveDataComponent implements OnInit {
         
         });
      
-      this.LineChart = new Chart(`lineChart1` , {
+      this.LineChart3 = new Chart(`lineChart1` , {
         type: `line`,
         
         data: {
@@ -419,7 +445,7 @@ export class LiveDataComponent implements OnInit {
         
   
       });
-      this.LineChart = new Chart(`kitchen-lineChart2` , {
+      this.kitchenLineChart2 = new Chart(`kitchen-lineChart2` , {
         type: `line`,
         
         data: {
@@ -482,7 +508,7 @@ export class LiveDataComponent implements OnInit {
         },
         
         });
-      this.LineChart = new Chart(`kitchen-lineChart` , {
+      this.kitchenLineChart = new Chart(`kitchen-lineChart` , {
         type: `line`,
         
         data: {
@@ -536,7 +562,7 @@ export class LiveDataComponent implements OnInit {
           }
         } 
         });
-        this.BarChart = new Chart ( 'kitchen-barChart1', {
+        this.kitchenBarChart = new Chart ( 'kitchen-barChart1', {
           type: 'bar' , 
           data:{
             // labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
@@ -599,7 +625,7 @@ export class LiveDataComponent implements OnInit {
           
     
         });
-        this.LineChart = new Chart(`kitchen-lineChart1` , {
+        this.kitchenLineChart3 = new Chart(`kitchen-lineChart1` , {
           type: `line`,
           
           data: {
@@ -652,7 +678,7 @@ export class LiveDataComponent implements OnInit {
             }
           } 
           });
-          this.LineChart = new Chart(`room-lineChart2` , {
+          this.roomLineChart2 = new Chart(`room-lineChart2` , {
             type: `line`,
             
             data: {
@@ -715,7 +741,7 @@ export class LiveDataComponent implements OnInit {
             },
             
             });
-          this.LineChart = new Chart(`room-lineChart` , {
+          this.roomLineChart1 = new Chart(`room-lineChart` , {
             type: `line`,
             
             data: {
@@ -768,7 +794,7 @@ export class LiveDataComponent implements OnInit {
               }
             } 
             });
-            this.BarChart = new Chart ( 'room-barChart1', {
+            this.roomBarChart= new Chart ( 'room-barChart1', {
               type: 'bar' , 
               data:{
                 // labels: ['00AM','3AM','6AM','9AM','12PM','3PM','6PM','9PM'],
@@ -831,7 +857,7 @@ export class LiveDataComponent implements OnInit {
               
         
             });
-            this.LineChart = new Chart(`room-lineChart1` , {
+            this.roomLineChart3 = new Chart(`room-lineChart1` , {
               type: `line`,
               
               data: {

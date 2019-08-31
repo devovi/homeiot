@@ -8,17 +8,21 @@ import { SharedModule } from '../shared/shared.module';
 /* components */
 import { PagesComponent } from './pages.component';
 import { LoginComponent } from './login/login.component';
+import {DeviceReportModule} from './device-report/device-report.module';
+
 @NgModule({
     imports: [
         CommonModule,
         LayoutModule,
         SharedModule,
+        DeviceReportModule,
         routing,
         
     ],
     declarations: [
         PagesComponent,
         LoginComponent,
+        
         
         
     ]

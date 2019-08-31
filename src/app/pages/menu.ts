@@ -172,7 +172,7 @@
        // icon:
    },
    {
-       path:'',
+       path:'device-report',
        title:'Device Report',
        // icon:
    },
