@@ -9,13 +9,14 @@ import { SharedModule } from '../shared/shared.module';
 import { PagesComponent } from './pages.component';
 import { LoginComponent } from './login/login.component';
 import {DeviceReportModule} from './device-report/device-report.module';
-
+import {LiveVideoModule} from './live-video/live-video.module';
 @NgModule({
     imports: [
         CommonModule,
         LayoutModule,
         SharedModule,
         DeviceReportModule,
+        LiveVideoModule,
         routing,
         
     ],

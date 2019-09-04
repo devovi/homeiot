@@ -102,7 +102,9 @@ export class LiveDataComponent implements OnInit {
     setInterval() {
       this.interval = setInterval(() => {
         this.getAllSensorData();
-      },1000 * 5 *60)
+      //  this.tempreatureDataList;
+      //  this.ledDataList;
+      },1000 * 5 )
     }
     reset(){
       clearInterval(this.interval)

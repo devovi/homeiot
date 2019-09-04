@@ -182,6 +182,11 @@
        // icon:
    },
    {
+    path:'live-video',
+    title:'Live Video',
+    // icon:
+},
+   {
        path:'',
        title:'Device Configuration',
        // icon:

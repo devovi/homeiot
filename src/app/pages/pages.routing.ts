@@ -19,6 +19,7 @@ export const childRoutes: Routes = [
             { path: 'form', loadChildren: './form/form.module#FormModule' },
             { path: 'live-data', loadChildren: './live-data/live-data.module#LiveDataModule' },
             { path: 'device-report' ,loadChildren: './device-report/device-report.module#DeviceReportModule'},
+            {path: 'live-video', loadChildren: './live-video/live-video.module#LiveVideoModule'},
             { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
             { path: 'ui', loadChildren: './ui/ui.module#UIModule' },
             { path: 'sensordevice', loadChildren: './sensordevice/Sensordevice.Module#SensordeviceModule' },

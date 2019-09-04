@@ -8,7 +8,8 @@ import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { ChartsModule } from 'ng2-charts';
-
+import {LiveVideoModule} from './pages/live-video/live-video.module';
+import {LiveDataModule} from './pages/live-data/live-data.module';
 import { HttpHandler } from '@angular/common/http';
 @NgModule({
   imports: [
@@ -17,6 +18,8 @@ import { HttpHandler } from '@angular/common/http';
     BrowserAnimationsModule,
     FormsModule,
     PagesModule,
+    LiveVideoModule,
+    LiveDataModule,
     routing,
     // ChartsModule
   ],

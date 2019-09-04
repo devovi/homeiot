@@ -14,6 +14,11 @@ import * as moment from 'moment';
     CommonModule,
     routing
   ],
+  exports: [
+    LiveDataComponent
+  ],
+  
+
   declarations: [LiveDataComponent],
   providers: [ HttpClient,LivedataService]
 })
